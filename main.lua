@@ -6,53 +6,53 @@ dijkstra = require ('Dijkstra')
 function distcolor(distance)
 	distance = distance or 0
 	if distance%24==0 then
-		return 255,0,0
+		return 1,0,0
 	elseif distance%24==1 then
-		return 255,64,0
+		return 1,0.25,0
 	elseif distance%24==2 then
-		return 255,128,0
+		return 1,0.5,0
 	elseif distance%24==3 then
-		return 255,191,0
+		return 1,0.75,0
 	elseif distance%24==4 then
-		return 255,255,0
+		return 1,1,0
 	elseif distance%24==5 then
-		return 191,255,0
+		return 0.75,1,0
 	elseif distance%24==6 then
-		return 128,255,0
+		return 0.5,1,0
 	elseif distance%24==7 then
-		return 64,255,0
+		return 0.25,1,0
 	elseif distance%24==8 then
-		return 0,255,0
+		return 0,1,0
 	elseif distance%24==9 then
-		return 0,255,64
+		return 0,1,0.25
 	elseif distance%24==10 then
-		return 0,255,128
+		return 0,1,0.5
 	elseif distance%24==11 then
-		return 0,255,191
+		return 0,1,0.75
 	elseif distance%24==12 then
-		return 0,255,255
+		return 0,1,1
 	elseif distance%24==13 then
-		return 0,191,255
+		return 0,0.75,1
 	elseif distance%24==14 then
-		return 0,128,255
+		return 0,0.5,1
 	elseif distance%24==15 then
-		return 0,64,255
+		return 0,0.25,1
 	elseif distance%24==16 then
-		return 0,0,255
+		return 0,0,1
 	elseif distance%24==17 then
-		return 64,0,255
+		return 0.25,0,1
 	elseif distance%24==18 then
-		return 128,0,255
+		return 0.5,0,1
 	elseif distance%24==19 then
-		return 191,0,255
+		return 0.75,0,1
 	elseif distance%24==20 then
-		return 255,0,255
+		return 1,0,1
 	elseif distance%24==21 then
-		return 255,0,191
+		return 1,0,0.75
 	elseif distance%24==22 then
-		return 255,0,128
+		return 1,0,0.5
 	elseif distance%24==23 then
-		return 255,0,64
+		return 1,0,0.25
 	else
 		return 0,0,0
 	end
@@ -117,14 +117,14 @@ function love.draw()
 				love.graphics.rectangle('fill',cell_width*(i-1),cell_height*(j-1),cell_width,cell_height)
 			end
 			if path[i][j]==-1 then
-				love.graphics.setColor(255,255,255)
+				love.graphics.setColor(1,1,1)
 				love.graphics.rectangle('line',cell_width*(i-1),cell_height*(j-1),cell_width,cell_height)
 			end
 			if xmarks and map[i][j]==0 then
 				if colors then
 					love.graphics.setColor(0,0,0)
 				else
-					love.graphics.setColor(255,255,255)
+					love.graphics.setColor(1,1,1)
 				end
 				love.graphics.line(cell_width*(i-1),cell_height*(j-1),cell_width*(i),cell_height*(j))
 				love.graphics.line(cell_width*(i-1),cell_height*(j),cell_width*(i),cell_height*(j-1))
@@ -133,7 +133,7 @@ function love.draw()
 				if colors then
 					love.graphics.setColor(0,0,0)
 				else
-					love.graphics.setColor(255,255,255)
+					love.graphics.setColor(1,1,1)
 				end
 				love.graphics.print(string.format("%.1f",map_drawn[i][j]),cell_width*(i-1),cell_height*(j-0.5))
 			end
@@ -143,7 +143,7 @@ function love.draw()
 		if colors then
 			love.graphics.setColor(0,0,0)
 		else
-			love.graphics.setColor(255,255,255)
+			love.graphics.setColor(1,1,1)
 		end
 		pathx,pathy=dijkstra_path(map_drawn,wheremouse().x,wheremouse().y,diagonal_disabled)
 			for i=1, #pathx-1 do
@@ -154,12 +154,12 @@ function love.draw()
 end
 
 function love.mousepressed( x, y, button )
-	if button=='l' then
+	if button==1 then
 		if map[wheremouse().x][wheremouse().y]==0 then map[wheremouse().x][wheremouse().y]=math.huge
 		else map[wheremouse().x][wheremouse().y]=0
 		end
 		rescan()
-	elseif button=='r' then
+	elseif button==2 then
 		if path[wheremouse().x][wheremouse().y]==-1 then path[wheremouse().x][wheremouse().y]=nil
 		else path[wheremouse().x][wheremouse().y]=-1
 		end
